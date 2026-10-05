@@ -1,0 +1,13 @@
+<!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN"
+ "http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd">
+<!-- MATE's SysLinuxOS Tools menu includes explicit filenames. -->
+<Menu>
+  <Name>Applications</Name>
+  <Menu>
+    <Name>SysLinuxOS Tools</Name>
+    <Directory>syslinuxos-tools.directory</Directory>
+    <Include>
+      <Filename>syslinuxos-nvidia-setup.desktop</Filename>
+    </Include>
+  </Menu>
+</Menu>

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=SysLinuxOS NVIDIA Setup
+Comment=Install NVIDIA drivers and optional CUDA Toolkit
+Comment[it]=Installa i driver NVIDIA e CUDA Toolkit facoltativo
+Comment[es]=Instala los controladores NVIDIA y CUDA Toolkit opcional
+Comment[de]=NVIDIA-Treiber und optionales CUDA Toolkit installieren
+Comment[fr]=Installer les pilotes NVIDIA et CUDA Toolkit facultatif
+Exec=/usr/bin/syslinuxos-nvidia-setup --gui
+Icon=syslinuxos-nvidia-setup
+Terminal=false
+StartupNotify=true

@@ -1,0 +1,41 @@
+name: Test and build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 dpkg-dev desktop-file-utils
+      - name: Validate Bash and desktop entry
+        run: |
+          bash -n syslinuxos-nvidia-setup.sh build-deb.sh
+          desktop-file-validate syslinuxos-nvidia-setup.desktop
+      - name: Run tests
+        run: python3 -B -m unittest discover -s tests -v
+      - name: Build Debian package and source archive
+        run: bash build-deb.sh
+      - name: Verify checksums
+        working-directory: dist
+        run: sha256sum --check SHA256SUMS
+      - name: Upload distribution artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: syslinuxos-nvidia-setup
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30

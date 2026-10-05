@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <title>SysLinuxOS NVIDIA Setup</title>
+  <desc>Scheda video PCIe con ventola e chip verde.</desc>
+  <!-- Broad silhouettes remain legible at menu sizes; no embedded text. -->
+  <path fill="#94a3b8" d="M5 11h5v40H5zM3 11h10v4H3z"/>
+  <rect x="10" y="17" width="49" height="31" rx="5" fill="#172b35"/>
+  <path fill="#76b900" d="M15 17h39a5 5 0 0 1 5 5v3H10v-3a5 5 0 0 1 5-5Z"/>
+  <path fill="#d8ad4d" d="M20 48h28v6H20z"/>
+  <path stroke="#172b35" stroke-width="2" d="M26 48v6m7-6v6m7-6v6"/>
+  <circle cx="27" cy="34" r="11" fill="#0b151c" stroke="#a5b4bf" stroke-width="2"/>
+  <g fill="#cbd5e1">
+    <path d="M27 32c-7 0-8-6-4-7 4-1 5 3 4 7Z"/>
+    <path d="M29 34c0-7 6-8 7-4 1 4-3 5-7 4Z"/>
+    <path d="M27 36c7 0 8 6 4 7-4 1-5-3-4-7Z"/>
+    <path d="M25 34c0 7-6 8-7 4-1-4 3-5 7-4Z"/>
+  </g>
+  <circle cx="27" cy="34" r="3" fill="#76b900"/>
+  <g stroke="#76b900" stroke-width="2" stroke-linecap="round">
+    <path d="M46 28v-2m5 2v-2m-5 16v-2m5 2v-2m-7-9h-2m2 6h-2m12-6h2m-2 6h2"/>
+  </g>
+  <rect x="44" y="28" width="10" height="12" rx="2" fill="#76b900"/>
+  <rect x="47" y="31" width="4" height="6" rx="1" fill="#172b35"/>
+</svg>
