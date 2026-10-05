@@ -17,10 +17,10 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Install validation tools
+      - name: Install build and GUI dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3 dpkg-dev desktop-file-utils
+          sudo apt-get install -y python3 dpkg-dev desktop-file-utils yad pkexec
       - name: Validate Bash and desktop entry
         run: |
           bash -n syslinuxos-nvidia-setup.sh build-deb.sh
