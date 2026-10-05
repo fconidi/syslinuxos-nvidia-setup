@@ -1,6 +1,6 @@
-# SysLinuxOS NVIDIA Setup
+# SysLinuxOS NVIDIA Setup: quick start
 
-[Italian documentation](README.md) · [Downloads](https://github.com/fconidi/syslinuxos-nvidia-setup/releases)
+[Complete documentation](README.md) · [Downloads](https://github.com/fconidi/syslinuxos-nvidia-setup/releases)
 
 A standalone Bash installer for **SysLinuxOS 13 and Debian 13 amd64**.
 It detects NVIDIA display adapters, installs compatible drivers through APT,
@@ -25,10 +25,10 @@ setup instructions add the signing key and APT source.
 
 ## Install the Debian package
 
-Download the `.deb` from [release v1.1.0](https://github.com/fconidi/syslinuxos-nvidia-setup/releases/tag/v1.1.0):
+Download the `.deb` from [release v1.1.1](https://github.com/fconidi/syslinuxos-nvidia-setup/releases/tag/v1.1.1):
 
 ```bash
-sudo apt install --reinstall yad ./syslinuxos-nvidia-setup_1.1.0_amd64.deb
+sudo apt install --reinstall yad ./syslinuxos-nvidia-setup_1.1.1_amd64.deb
 ```
 
 YAD is a required dependency. Explicitly reinstalling it restores its files
@@ -78,7 +78,7 @@ check `nvcc --version` in a new terminal. Administrative logs are stored in
 `/var/log/syslinuxos-nvidia-XXXXXXXX.log`; GUI session logs are in
 `/tmp/syslinuxos-nvidia-session.XXXXXXXX.log`.
 
-See the [Italian guide](README.md) for repository details, Secure Boot enrollment,
+See the [complete guide](README.md) for repository details, Secure Boot enrollment,
 driver selection, removal instructions and technical sources.
 
 ## Build and test
@@ -86,6 +86,7 @@ driver selection, removal instructions and technical sources.
 ```bash
 git clone https://github.com/fconidi/syslinuxos-nvidia-setup.git
 cd syslinuxos-nvidia-setup
+sudo apt install python3 dpkg-dev desktop-file-utils yad pkexec
 bash -n syslinuxos-nvidia-setup.sh build-deb.sh
 python3 -B -m unittest discover -s tests -v
 desktop-file-validate syslinuxos-nvidia-setup.desktop

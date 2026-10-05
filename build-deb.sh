@@ -25,4 +25,4 @@ tar --exclude=./.git --exclude=dist --exclude=__pycache__ --exclude='*.pyc' \
     sha256sum "syslinuxos-nvidia-setup_${version}_amd64.deb" \
         "syslinuxos-nvidia-setup-${version}.tar.gz" > SHA256SUMS
 )
-printf 'Creati pacchetto Debian, archivio sorgenti e checksum in %s/dist\n' "$PWD"
+printf 'Created Debian package, source archive and checksums in %s/dist\n' "$PWD"

@@ -1,13 +1,14 @@
 Package: syslinuxos-nvidia-setup
-Version: 1.1.0
+Version: 1.1.1
 Section: admin
 Priority: optional
 Architecture: amd64
 Depends: bash (>= 5), apt, coreutils, util-linux, yad, pkexec
 Maintainer: Franco Conidi aka edmond <fconidi@gmail.com>
 Homepage: https://syslinuxos.com
-Description: NVIDIA driver setup with optional CUDA for SysLinuxOS 13
- Detect NVIDIA display adapters and install compatible APT driver packages.
+Description: NVIDIA driver setup with optional CUDA for SysLinuxOS and Debian
+ Detect NVIDIA display adapters on SysLinuxOS 13 or Debian 13 amd64.
+ Install compatible driver packages through APT.
  Includes a YAD frontend in the SysLinuxOS Tools menu and a terminal mode.
  Automatically selects English, Italian, Spanish, German or French.
  English is used for unsupported or unset system languages.

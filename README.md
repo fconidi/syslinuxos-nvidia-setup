@@ -1,49 +1,51 @@
 # SysLinuxOS NVIDIA Setup
 
-[English guide](README.en.md) · [Release e download](https://github.com/fconidi/syslinuxos-nvidia-setup/releases) · [Changelog](CHANGELOG.md)
+[Downloads](https://github.com/fconidi/syslinuxos-nvidia-setup/releases) · [Quick start](README.en.md) · [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
 
-Installatore Bash per SysLinuxOS 13 / Debian 13 amd64, con interfaccia YAD
-facoltativa e alternativa da terminale. Il file da distribuire è
-`syslinuxos-nvidia-setup.sh` (autonomo).
+A standalone Bash installer for **SysLinuxOS 13 and Debian 13 amd64**, with
+a YAD graphical interface and a terminal alternative. The standalone script
+is `syslinuxos-nvidia-setup.sh`.
 
-## Versione 1.1.0
+## Version 1.1.1
 
-Interfaccia grafica, pulsanti, guida da terminale, messaggi ed errori
-disponibili in **italiano, inglese, spagnolo, tedesco e francese**. La lingua
-viene selezionata automaticamente dalle impostazioni della sessione;
-**l'inglese è la lingua predefinita** quando la lingua non è supportata o
-non è impostata. Anche le descrizioni della voce di menu sono tradotte.
+Project documentation, the changelog and package build messages are in English.
+The graphical interface, buttons, terminal help, messages and errors support
+**English, Italian, Spanish, German and French**. The language is selected
+automatically from the desktop session settings; **English is the default**
+when the language is unsupported or unset. Application menu descriptions are
+also localized.
 
-La categoria dei messaggi segue la precedenza `LC_ALL`, `LC_MESSAGES`,
-`LANG`. Per locale diversi da `C`/`POSIX` viene rispettata anche la lista
-di preferenze `LANGUAGE`, scegliendo la prima lingua supportata. Le varianti
-regionali, per esempio `es_MX.UTF-8` e `fr_CA.UTF-8`, usano rispettivamente
-spagnolo e francese. `C`, `C.UTF-8` e `POSIX` usano l'inglese.
+Message locale selection follows the precedence `LC_ALL`, `LC_MESSAGES`,
+`LANG`. For locales other than `C`/`POSIX`, the `LANGUAGE` preference list is
+also respected, selecting the first supported language. Regional variants such
+as `es_MX.UTF-8` and `fr_CA.UTF-8` select Spanish and French respectively.
+`C`, `C.UTF-8` and `POSIX` select English.
 
-La lingua scelta viene passata esplicitamente al processo amministrativo,
-così rimane coerente dopo sudo/pkexec. Il catalogo è incorporato nello script
-autonomo; non servono file di traduzione esterni. L'output tecnico di APT,
-DKMS e degli altri comandi rimane in inglese per consentire controlli stabili.
+The selected language is passed explicitly to the administrative worker, so
+it remains consistent after sudo/pkexec authentication. Message catalogs are
+embedded in the standalone script; no external translation files are needed.
+Technical output from APT, DKMS and other commands remains in English to allow
+consistent checks.
 
-Per provare il rilevamento senza installare driver:
+To test detection without installing drivers:
 
 ```bash
-env LC_ALL= LC_MESSAGES= LANGUAGE= LANG=it_IT.UTF-8 syslinuxos-nvidia-setup --help
-env LC_ALL= LC_MESSAGES= LANGUAGE= LANG=fr_FR.UTF-8 syslinuxos-nvidia-setup --check --cli
+env LC_ALL= LC_MESSAGES= LANGUAGE= LANG=en_US.UTF-8 syslinuxos-nvidia-setup --help
+env LC_ALL= LC_MESSAGES= LANGUAGE= LANG=C.UTF-8 syslinuxos-nvidia-setup --check --cli
 ```
 
-## Correzione inclusa dalla versione 1.0.1
+## Repository key fix included since version 1.0.1
 
-Corretto l'arresto con codice 22 / HTTP 404 durante la configurazione del
-repository NVIDIA Debian 13. La chiave viene estratta dal pacchetto ufficiale
-`cuda-keyring_1.1-1_all.deb`, controllata come keyring GPG e associata al repository
-tramite `Signed-By`.
+The exit code 22 / HTTP 404 failure while configuring the NVIDIA Debian 13
+repository was corrected. The key is extracted from the official
+`cuda-keyring_1.1-1_all.deb` package, validated as a GPG keyring and associated
+with the repository through `Signed-By`.
 
-## Installazione dal repository APT
+## Install from the APT repository
 
-Il pacchetto è distribuito nel repository firmato
-[SysLinuxOS-Tools](https://github.com/fconidi/SysLinuxOS-Tools#installation-client-side).
-Configurare il repository seguendo le istruzioni del collegamento, quindi:
+The package is distributed through the signed
+[SysLinuxOS-Tools repository](https://github.com/fconidi/SysLinuxOS-Tools#installation-client-side).
+Configure the repository using the linked instructions, then run:
 
 ```bash
 sudo apt update
@@ -51,232 +53,240 @@ sudo apt install --reinstall yad syslinuxos-nvidia-setup
 syslinuxos-nvidia-setup --check --cli
 ```
 
-Il repository si usa anche su **Debian 13 amd64**. La suite `tirreno` identifica
-questo repository aggiuntivo; i repository Debian del sistema restano `trixie`.
-Per aggiungere soltanto la chiave e la sorgente APT, usare la configurazione
-manuale descritta nel repository SysLinuxOS-Tools.
+The repository also supports **Debian 13 amd64**. Its `tirreno` suite identifies
+this additional repository; the system's Debian repositories continue to use
+`trixie`. To add only the signing key and APT source, use the manual setup
+instructions in the SysLinuxOS-Tools repository.
 
-## Installazione dal pacchetto Debian
+## Install the Debian package
 
-Scaricare il `.deb` dalla [release v1.1.0](https://github.com/fconidi/syslinuxos-nvidia-setup/releases/tag/v1.1.0)
-oppure compilarlo con `build-deb.sh` (il risultato si trova in `dist/`):
+Download the `.deb` from [release v1.1.1](https://github.com/fconidi/syslinuxos-nvidia-setup/releases/tag/v1.1.1),
+or build it with `build-deb.sh` (output is written to `dist/`):
 
 ```bash
-sudo apt install --reinstall yad ./syslinuxos-nvidia-setup_1.1.0_amd64.deb
+sudo apt install --reinstall yad ./syslinuxos-nvidia-setup_1.1.1_amd64.deb
 syslinuxos-nvidia-setup --check --cli
 ```
 
-`yad` è una **dipendenza obbligatoria** del pacchetto (`Depends`): APT lo
-installa se manca. Il comando consigliato lo indica esplicitamente con
-`--reinstall`, così lo reinstalla anche quando è già presente. È stato
-riscontrato un mancato avvio della GUI con un'installazione YAD preesistente,
-risolto reinstallando YAD.
-La sola installazione del `.deb`, senza `--reinstall yad`, mantiene invece
-un YAD già installato senza ripristinarne i file.
+`yad` is a **required dependency** of the package (`Depends`): APT installs it
+if it is missing. The recommended command names it explicitly with
+`--reinstall`, so it is reinstalled even when already present. A GUI startup
+failure with an existing YAD installation was resolved by reinstalling YAD.
+Installing the `.deb` alone, without `--reinstall yad`, keeps an existing YAD
+installation without restoring its files.
 
-Se il `.deb` è già installato, per ripristinare soltanto YAD eseguire:
+If the `.deb` is already installed, restore YAD alone with:
 
 ```bash
 sudo apt reinstall yad
 ```
 
-La reinstallazione viene gestita da APT con il comando di installazione
-consigliato, anziché essere eseguita automaticamente dal pacchetto:
-avviare APT da uno script
-`postinst` entrerebbe in conflitto con i blocchi della transazione APT/dpkg
-già in corso.
+APT handles the reinstall through the recommended installation command.
+Starting APT from a package `postinst` script would conflict with the locks
+held by the APT/dpkg transaction already in progress.
 
-L'installazione del pacchetto aggiunge soltanto l'utilità, YAD e i suoi
-prerequisiti: **non avvia l'installazione dei driver**. Dal menu MATE aprire
-**Applicazioni → SysLinuxOS-Tools → SysLinuxOS NVIDIA Setup**. Se la voce
-non compare subito, chiudere e riaprire il menu; eventualmente uscire e
-rientrare nella sessione.
+Installing the package adds the utility, YAD and its prerequisites:
+**it does not start driver installation**. In MATE, open
+**Applications → SysLinuxOS-Tools → SysLinuxOS NVIDIA Setup**. If the entry
+does not appear immediately, close and reopen the menu; if necessary, log out
+and log back in.
 
-Il menu originale MATE seleziona i programmi per nome del file `.desktop`.
-Il pacchetto aggiunge quindi un file in
-`/etc/xdg/menus/applications-merged/`, usando il nome interno già presente
-`SysLinuxOS Tools`, senza riscrivere `mate-applications.menu`.
-L'icona SVG dedicata rappresenta una scheda PCIe con ventola e chip verde,
-senza testo o loghi ufficiali; viene installata nel tema `hicolor` e si
-adatta alla dimensione del menu. La voce non viene duplicata nel sottomenu
-MATE Sistema.
+The original MATE menu selects applications by their `.desktop` filename.
+The package therefore adds a file under
+`/etc/xdg/menus/applications-merged/`, using the existing internal menu name
+`SysLinuxOS Tools`, without rewriting `mate-applications.menu`.
+The dedicated SVG icon depicts a PCIe card with a fan and a green chip,
+without text or official logos. It is installed in the `hicolor` theme and
+scales to the menu icon size. The application entry is not duplicated in
+MATE's System submenu.
 
-Alla comparsa della finestra scegliere **Solo driver** oppure
-**Driver + CUDA**. Segue l'autenticazione amministrativa; download,
-installazione e compilazione DKMS proseguono automaticamente.
-Chiudere la finestra iniziale annulla tutto. Chiudere la finestra del log
-durante l'installazione lascia terminare APT: non interrompere il computer.
+When the window appears, choose **Driver only** or **Driver + CUDA**.
+Administrative authentication follows; downloads, installation and DKMS
+compilation then continue automatically. Closing the initial window cancels
+the operation. Closing the log window during installation allows APT to finish:
+keep the computer running until the operation completes.
 
-In alternativa, estrarre l'archivio sorgenti e usare direttamente lo script:
+Alternatively, extract the source archive and run the standalone script:
 
 ```bash
-tar -xzf syslinuxos-nvidia-setup-1.1.0.tar.gz
-cd syslinuxos-nvidia-setup-1.1.0
+tar -xzf syslinuxos-nvidia-setup-1.1.1.tar.gz
+cd syslinuxos-nvidia-setup-1.1.1
 ./syslinuxos-nvidia-setup.sh --check --cli
 ./syslinuxos-nvidia-setup.sh --gui
 ```
 
-La versione portatile richiede YAD e pkexec per la GUI
-(`sudo apt install yad pkexec`). La GUI va avviata come utente normale:
-il processo privilegiato lavora separatamente, anche sotto Wayland.
-Senza GUI, oppure per automazione:
+The portable version requires YAD and pkexec for the GUI
+(`sudo apt install yad pkexec`). Launch the GUI as your normal user:
+the privileged worker runs separately, including under Wayland.
+For terminal use or automation:
 
 ```bash
-./syslinuxos-nvidia-setup.sh --cli                 # domanda CUDA
-sudo ./syslinuxos-nvidia-setup.sh --cli --no-cuda  # senza domande
-sudo ./syslinuxos-nvidia-setup.sh --cli --cuda     # include CUDA
+./syslinuxos-nvidia-setup.sh --cli                 # asks whether to install CUDA
+sudo ./syslinuxos-nvidia-setup.sh --cli --no-cuda  # no prompts
+sudo ./syslinuxos-nvidia-setup.sh --cli --cuda     # includes CUDA
 ```
 
-## Scelta del driver e compatibilità
+## Driver selection and compatibility
 
-- Supporto esplicito per SysLinuxOS 13 / Debian 13, architettura amd64,
-  installati su disco. Nessun uso del codename SysLinuxOS `tirreno` come
-  suite Debian: la suite corretta è `trixie`.
-- Il database JSON ufficiale NVIDIA distingue le GPU moderne compatibili
-  con il modulo NVIDIA open da quelle che richiedono il modulo chiuso.
-  Per le moderne si usa il repository NVIDIA **Debian 13**, con
-  `nvidia-open` e `nvidia-kernel-open-dkms`. I componenti grafici utente
-  rimangono proprietari; non si tratta del driver Nouveau.
-- Per le GPU che richiedono il modulo chiuso si usano i pacchetti Debian
-  `nvidia-driver` e `nvidia-kernel-dkms`, con un controllo aggiuntivo di
-  `nvidia-detect`. Non vengono forzate raccomandazioni legacy o ambigue.
-- Per CUDA si usa rispettivamente `cuda-toolkit` di NVIDIA oppure
-  `nvidia-cuda-toolkit` di Debian. I due canali non vengono mescolati.
-  Nel primo caso viene aggiunto `/usr/local/cuda/bin` al PATH delle nuove
-  sessioni tramite `/etc/profile.d/syslinuxos-cuda.sh`.
-- GPU sconosciute, rami legacy antecedenti a 580 e combinazioni di GPU
-  che richiedono moduli incompatibili vengono segnalate senza forzature.
-- Gli header devono corrispondere al **kernel in esecuzione** e risultare
-  disponibili in APT. Lo script non installa né seleziona un altro kernel.
-  I driver Debian 550 sono bloccati su kernel >= 6.19, quindi anche sul
-  kernel 7.0 di SysLinuxOS: per tali GPU occorre avviare un kernel compatibile
-  prima di riprovare. La compilazione DKMS verifica le altre combinazioni.
-- Il ramo 550 distribuito da Debian è indicato dal wiki Debian come non
-  più mantenuto a monte: valutarne l'uso in base alla macchina di destinazione.
-- Una precedente installazione NVIDIA con file `.run` richiede la sua
-  disinstallazione dedicata. Se APT richiede rimozioni per migrare un driver
-  già presente, lo script si ferma con il motivo: non forza il cambio.
+- Explicit support for SysLinuxOS 13 / Debian 13, amd64, installed on disk.
+  The SysLinuxOS codename `tirreno` is not used as a Debian suite: the correct
+  Debian suite is `trixie`.
+- NVIDIA's official JSON database distinguishes modern GPUs compatible with
+  the open NVIDIA kernel module from GPUs that require the proprietary module.
+  Modern GPUs use NVIDIA's **Debian 13** repository, with `nvidia-open` and
+  `nvidia-kernel-open-dkms`. Graphics user-space components remain proprietary;
+  this is not the Nouveau driver.
+- GPUs requiring the proprietary module use Debian's `nvidia-driver` and
+  `nvidia-kernel-dkms` packages, with an additional `nvidia-detect` check.
+  Legacy or ambiguous recommendations are not forced.
+- CUDA uses NVIDIA's `cuda-toolkit` or Debian's `nvidia-cuda-toolkit`, matching
+  the selected driver channel. The two channels are not mixed. For NVIDIA's
+  toolkit, `/usr/local/cuda/bin` is added to the PATH of new sessions through
+  `/etc/profile.d/syslinuxos-cuda.sh`.
+- Unknown GPUs, legacy branches older than 580 and GPU combinations requiring
+  incompatible modules are reported without forcing an installation.
+- Headers must match the **running kernel** and be available through APT.
+  The script does not install or select another kernel. Debian's 550 drivers
+  are blocked on kernel 6.19 and newer, including SysLinuxOS kernel 7.0:
+  affected GPUs require booting a compatible kernel before retrying.
+  DKMS compilation checks other combinations.
+- Debian's 550 branch is described by the Debian wiki as no longer maintained
+  upstream; assess its suitability for the target machine.
+- A previous NVIDIA `.run` installation requires its dedicated uninstall tool.
+  If APT requires package removals to migrate an existing driver, the script
+  stops and reports the reason rather than forcing the migration.
 
-L'installatore deve scaricare il database hardware da
-`raw.githubusercontent.com/NVIDIA/nvidia-driver-assistant`, gli eventuali
-pacchetti NVIDIA da `developer.download.nvidia.com` e i pacchetti Debian dai
-repository configurati. Le chiavi APT vengono associate al singolo repository
-con `Signed-By`; il JSON viene solamente letto, mai eseguito.
+The installer downloads hardware data from
+`raw.githubusercontent.com/NVIDIA/nvidia-driver-assistant`, NVIDIA packages
+when needed from `developer.download.nvidia.com`, and Debian packages from
+the configured repositories. APT keys are associated with individual
+repositories through `Signed-By`; the JSON data is read, never executed.
 
-## Secure Boot e verifica dopo il riavvio
+## Secure Boot and verification after restarting
 
-Se Secure Boot è abilitato, il controllo confronta la chiave che firma il
-modulo con il certificato DKMS predefinito e verifica che sia registrato.
-Quando manca la registrazione, l'installazione termina con codice **20**
-e istruzioni MOK. Con la configurazione DKMS standard:
+When Secure Boot is enabled, verification compares the module signing key
+with the default DKMS certificate and checks whether it is enrolled.
+If enrollment is missing, installation finishes with exit code **20** and
+MOK instructions. With the standard DKMS configuration:
 
 ```bash
 sudo mokutil --import /var/lib/dkms/mok.pub
 ```
 
-Impostare una password temporanea e riavviare. Nella schermata firmware
-scegliere `Enroll MOK → Continue → Yes` e inserire la password.
-Se si usa una chiave DKMS personalizzata occorre registrare il suo
-certificato. La conferma nel firmware non è automatizzabile. Lo script
-non disabilita Secure Boot e non riavvia il PC.
+Set a temporary password and restart. In the firmware screen, choose
+`Enroll MOK → Continue → Yes` and enter the password.
+If DKMS uses a custom signing key, enroll that key's certificate instead.
+Firmware confirmation cannot be automated. The script does not disable
+Secure Boot or restart the computer.
 
-Dopo il riavvio:
+After restarting:
 
 ```bash
 nvidia-smi
 lsmod | grep nvidia
 dkms status
-nvcc --version   # solo se si è scelto CUDA; aprire un nuovo terminale
+nvcc --version   # only if CUDA was selected; open a new terminal
 ```
 
-La dicitura `CUDA Version` di `nvidia-smi` indica la compatibilità del
-driver, non dimostra che il toolkit sia installato. `nvcc --version`
-verifica il compilatore; per provare il calcolo effettivo serve anche
-eseguire un'applicazione CUDA sul PC NVIDIA.
+The `CUDA Version` field in `nvidia-smi` describes driver compatibility;
+it does not prove that the toolkit is installed. `nvcc --version` checks
+the compiler. Verifying actual GPU computation also requires running a CUDA
+application on the NVIDIA machine.
 
-## Log, errori e rimozione
+## Logs, errors and removal
 
-Il log amministrativo è `/var/log/syslinuxos-nvidia-XXXXXXXX.log`.
-La GUI conserva inoltre un log leggibile dall'utente in
-`/tmp/syslinuxos-nvidia-session.XXXXXXXX.log`. Gli errori APT, DKMS e
-initramfs interrompono l'operazione; il log riporta il codice e il punto
-di errore. L'installazione di pacchetti può essere parziale: non è una
-transazione con rollback automatico.
+The administrative log is `/var/log/syslinuxos-nvidia-XXXXXXXX.log`.
+The GUI also keeps a user-readable log at
+`/tmp/syslinuxos-nvidia-session.XXXXXXXX.log`. APT, DKMS and initramfs errors
+stop the operation; the log records the exit code and failure location.
+Package installation can be partial: it is not a transaction with automatic
+rollback.
 
-Lo script aggiunge, secondo il percorso scelto,
-`/etc/apt/sources.list.d/syslinuxos-nvidia.sources` e
-`/etc/apt/keyrings/syslinuxos-nvidia.gpg`, oppure
+Depending on the selected channel, the script adds
+`/etc/apt/sources.list.d/syslinuxos-nvidia.sources` and
+`/etc/apt/keyrings/syslinuxos-nvidia.gpg`, or
 `/etc/apt/sources.list.d/syslinuxos-nvidia-nonfree.sources`.
-I file preesistenti modificati vengono salvati con suffisso `.bak.DATA`.
-Se le componenti Debian non-free erano già attive possono comparire avvisi
-APT di destinazioni duplicate: le sorgenti originali non vengono riscritte.
-I repository restano attivi per ricevere gli aggiornamenti dei driver.
+Existing files that are modified are backed up with a `.bak.TIMESTAMP` suffix.
+If Debian's non-free components were already enabled, APT may report duplicate
+targets: the original sources are not rewritten. Repositories remain enabled
+to receive driver updates.
 
-Per rimuovere solamente l'utilità e la sua voce di menu:
+To remove only the utility and its application menu entry:
 
 ```bash
 sudo apt purge syslinuxos-nvidia-setup
 ```
 
-Driver, CUDA e configurazione APT restano installati. In caso di problemi
-grafici usare un kernel funzionante dal menu GRUB o una console testuale,
-consultare il log e pianificare la rimozione dei pacchetti driver con APT;
-non cancellare indiscriminatamente librerie NVIDIA o file initramfs.
+Drivers, CUDA and APT configuration remain installed. If graphics problems
+occur, use a working kernel from the GRUB menu or a text console, consult the
+log and plan driver package removal through APT. Avoid indiscriminately
+deleting NVIDIA libraries or initramfs files.
 
-## Requisiti e criteri di accettazione
+## Requirements and acceptance criteria
 
-- Riconoscere GPU PCI NVIDIA di classe display, anche su portatili ibridi;
-  ignorare audio HDMI e controller USB NVIDIA. Senza GPU non modificare nulla.
-- Richiedere i privilegi amministrativi soltanto per installare.
-- Chiedere se installare CUDA; consentire anche una scelta da riga di comando.
-- Scegliere il modulo secondo i dati hardware NVIDIA. Usare APT e repository
-  firmati, controllare gli header del kernel e il risultato DKMS.
-- Segnalare hardware non supportato, kernel incompatibile e Secure Boot senza
-  dichiarare falsamente attivo un driver che necessita di riavvio.
-- Non riavviare automaticamente e non arrestare la sessione grafica.
-- Consentire una verifica locale senza root, rete o modifiche.
+- Detect NVIDIA PCI display GPUs, including hybrid laptops; ignore NVIDIA
+  HDMI audio and USB controllers. Make no changes when no GPU is detected.
+- Request administrative privileges only for installation.
+- Ask whether CUDA should be installed; also allow an explicit CLI choice.
+- Select the module using NVIDIA hardware data. Use APT and signed repositories,
+  check matching kernel headers and verify the DKMS result.
+- Report unsupported hardware, incompatible kernels and Secure Boot requirements
+  without claiming that a driver requiring a restart is already active.
+- Do not restart automatically or stop the graphical session.
+- Allow a local check without root, networking or changes.
 
-## Sviluppo
+## Development
 
 ```bash
 git clone https://github.com/fconidi/syslinuxos-nvidia-setup.git
 cd syslinuxos-nvidia-setup
 ```
 
-Script: Bash, funzioni `snake_case`, array per argomenti APT, nessun `eval`.
-Python 3 legge esclusivamente i dati JSON delle GPU. Test con `unittest`
-e comandi di sistema simulati; nessuna installazione durante i test.
-La lingua del worker usa l'argomento interno validato `--ui-language=CODICE`;
-la selezione iniziale rimane automatica. I test verificano tutte le lingue,
-le priorità locale, i pulsanti e gli esiti GUI, i parametri dei messaggi e
-il passaggio della lingua attraverso l'autenticazione amministrativa.
+The script uses Bash, `snake_case` functions and arrays for APT arguments,
+without `eval`. Python 3 reads GPU JSON data only. Tests use `unittest` and
+simulated system commands; they do not install packages.
+The worker language is passed through the validated internal argument
+`--ui-language=CODE`; initial language selection remains automatic.
+Tests cover all supported languages, locale precedence, GUI buttons and
+outcomes, message format arguments and language preservation across
+administrative authentication.
+
+On Debian 13 / SysLinuxOS 13, install the test and build prerequisites:
 
 ```bash
-bash -n syslinuxos-nvidia-setup.sh
-python3 -m unittest discover -s tests -v
-python3 tests/check_mate_menu.py   # su SysLinuxOS MATE con gir1.2-matemenu-2.0
+sudo apt install python3 dpkg-dev desktop-file-utils yad pkexec
+```
+
+Then validate and build:
+
+```bash
+bash -n syslinuxos-nvidia-setup.sh build-deb.sh
+python3 -B -m unittest discover -s tests -v
+python3 tests/check_mate_menu.py   # on SysLinuxOS MATE with gir1.2-matemenu-2.0
 bash syslinuxos-nvidia-setup.sh --check --cli
 desktop-file-validate syslinuxos-nvidia-setup.desktop
 ./build-deb.sh
+cd dist
+sha256sum --check SHA256SUMS
 ```
 
-GitHub Actions esegue controllo della sintassi Bash, validazione della voce
-desktop, test e build a ogni push e pull request. Gli artefatti `.deb`,
-archivio sorgenti e `SHA256SUMS` sono disponibili nelle esecuzioni CI e nelle
-release. L'archivio sorgenti esclude i metadati locali `.git`.
+GitHub Actions checks Bash syntax, validates the desktop entry, runs tests
+and builds the package on pushes and pull requests. The `.deb`, source
+archive and `SHA256SUMS` are available in CI runs and releases.
+Source archives exclude local `.git` metadata.
 
-Confini: modifiche limitate a questo installatore; verificare gli errori APT;
-non forzare rimozioni, downgrade, sblocco di pacchetti o sostituzioni del kernel.
-Le prove su GPU fisica e sul riavvio devono essere effettuate su una macchina
-di test con hardware NVIDIA.
+Keep changes limited to this installer and verify APT errors. Do not force
+package removals, downgrades, held-package changes or kernel replacement.
+Physical GPU installation and restart tests require a test machine with
+NVIDIA hardware.
 
-## Fonti tecniche
+## Technical sources
 
-- [Preferenze linguistiche GNU](https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html)
-- [Localizzazione delle voci desktop](https://specifications.freedesktop.org/desktop-entry/latest/localized-keys.html)
-- [Driver NVIDIA su Debian](https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/debian.html)
-- [Moduli kernel NVIDIA](https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/kernel-modules.html)
-- [Database e logica NVIDIA Driver Assistant](https://github.com/NVIDIA/nvidia-driver-assistant)
-- [Compatibilità driver/kernel Debian](https://wiki.debian.org/NvidiaGraphicsDrivers)
-- [CUDA Toolkit Debian](https://packages.debian.org/trixie/nvidia-cuda-toolkit)
-- [Compatibilità CUDA e driver](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html)
+- [GNU language preferences](https://www.gnu.org/software/gettext/manual/html_node/The-LANGUAGE-variable.html)
+- [Desktop entry localization](https://specifications.freedesktop.org/desktop-entry/latest/localized-keys.html)
+- [NVIDIA drivers on Debian](https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/debian.html)
+- [NVIDIA kernel modules](https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/kernel-modules.html)
+- [NVIDIA Driver Assistant database and logic](https://github.com/NVIDIA/nvidia-driver-assistant)
+- [Debian driver/kernel compatibility](https://wiki.debian.org/NvidiaGraphicsDrivers)
+- [Debian CUDA Toolkit](https://packages.debian.org/trixie/nvidia-cuda-toolkit)
+- [CUDA and driver compatibility](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html)

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SysLinuxOS NVIDIA Setup 1.1.0 — standalone, Bash >= 5, Debian/SysLinuxOS 13.
+# SysLinuxOS NVIDIA Setup 1.1.1 — standalone, Bash >= 5, Debian/SysLinuxOS 13.
 # Sources and operational limits are documented in the accompanying README.
 
 UI=auto

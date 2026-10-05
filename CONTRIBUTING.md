@@ -15,6 +15,7 @@ arguments. The script must remain standalone and support its read-only
 Before submitting:
 
 ```bash
+sudo apt install python3 dpkg-dev desktop-file-utils yad pkexec
 bash -n syslinuxos-nvidia-setup.sh build-deb.sh
 python3 -B -m unittest discover -s tests -v
 desktop-file-validate syslinuxos-nvidia-setup.desktop
