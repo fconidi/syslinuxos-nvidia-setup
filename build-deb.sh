@@ -17,7 +17,7 @@ install -Dm0644 CHANGELOG.md "$staging/usr/share/doc/syslinuxos-nvidia-setup/CHA
 printf '%s\n' /etc/xdg/menus/applications-merged/syslinuxos-nvidia-setup.menu > "$staging/DEBIAN/conffiles"
 mkdir -p dist
 dpkg-deb --root-owner-group --build "$staging" "dist/syslinuxos-nvidia-setup_${version}_amd64.deb"
-tar --exclude=./.git --exclude=dist --exclude=__pycache__ --exclude='*.pyc' \
+tar --exclude=./.git --exclude='./tests' --exclude='*/tests' --exclude='./test' --exclude='*/test' --exclude='.test-artifacts' --exclude='*.qcow2' --exclude='*.vdi' --exclude='*.vmdk' --exclude='AGENTS*.md' --exclude='CLAUDE*.md' --exclude='HANDOFF*.md' --exclude='MEMORY*.md' --exclude='SPEC*.md' --exclude='.claude' --exclude='.codex' --exclude='.remember' --exclude=dist --exclude=__pycache__ --exclude='*.pyc' \
     --transform="s,^\.,syslinuxos-nvidia-setup-${version}," \
     -czf "dist/syslinuxos-nvidia-setup-${version}.tar.gz" .
 (
