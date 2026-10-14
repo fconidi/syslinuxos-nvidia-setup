@@ -60,7 +60,7 @@ sudo ./syslinuxos-nvidia-setup.sh --cli --cuda
 
 `--check` reads local hardware information without root, networking or changes.
 
-## Compatibility and verification
+## Compatibility
 
 - Drivers are selected using NVIDIA's hardware data and signed APT repositories.
   Open kernel modules are used where supported; older supported GPUs use
@@ -81,20 +81,3 @@ check `nvcc --version` in a new terminal. Administrative logs are stored in
 See the [complete guide](README.md) for repository details, Secure Boot enrollment,
 driver selection, removal instructions and technical sources.
 
-## Build and test
-
-```bash
-git clone https://github.com/fconidi/syslinuxos-nvidia-setup.git
-cd syslinuxos-nvidia-setup
-sudo apt install python3 dpkg-dev desktop-file-utils yad pkexec
-bash -n syslinuxos-nvidia-setup.sh build-deb.sh
-python3 -B -m unittest discover -s tests -v
-desktop-file-validate syslinuxos-nvidia-setup.desktop
-./build-deb.sh
-cd dist
-sha256sum --check SHA256SUMS
-```
-
-Build output includes the `.deb`, source archive and checksums. GitHub Actions
-runs validation, tests and builds for pushes and pull requests. Tests simulate
-hardware and privileged commands; they do not install drivers.
